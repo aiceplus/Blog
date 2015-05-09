@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+<!-- add to use upload start-->
+	
+<!-- <constant name="struts.multipart.maxSize" value="1152921504606846970006" /> -->
+<!-- <constant name="struts.i18n.encoding" value="UTF-8" /> -->
+<!-- <constant name="struts.multipart.saveDir" value="/tmp" /> -->
+<!-- <constant name="struts.objectFactory" value="spring" /> -->
+<!-- <constant name="struts.devMode" value="false" /> -->
+<!-- <bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest" name="myRequestParser" class="com.aice.service.RequestParseWrapper" scope="default" optional="true" /> -->
+<!-- <constant name="struts.multipart.handler" value="myRequestParser" /> -->
+
+<!-- add to use upload end -->
+<!--  
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <include file="example.xml"/>
+    <package name="default" namespace="/" extends="struts-default">
+        <default-action-ref name="index" />
+        <action name="index">
+            <result type="redirectAction">
+                <param name="actionName">HelloWorld</param>
+                <param name="namespace">/example</param>
+            </result>
+        </action>
+    </package>
+-->
+    <!-- Add packages here -->
+    <package name="user" namespace="/" extends="struts-default">
+        <action name="userAction" class="com.aice.action.UserAction" method="addUser">
+            <result name="accept">
+            	/index.jsp
+            </result>
+        </action>
+        
+        <action name="loginAction" class="com.aice.action.LoginAction" method="checkUser">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+        
+        <action name="updateUserAction" class="com.aice.action.UpdateUserAction" method="updateUser">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+       
+        
+    	<action name="addSortAction" class="com.aice.action.SortAction" method="addSort">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+        
+        
+    </package>
+    <package name="sort" namespace="/" extends="struts-default">
+    	<action name="deleteSortAction" class="com.aice.action.UpdateSortAction" method="deleteSort">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+        
+    	<action name="updateSortAction" class="com.aice.action.UpdateSortAction" method="updateSort">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+    </package>
+</struts>
