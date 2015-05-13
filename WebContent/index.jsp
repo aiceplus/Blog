@@ -5,9 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <%@taglib uri="/struts-tags" prefix="s"%>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.util.Iterator" %>
-<%@page import="com.aice.model.Sort" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="com.aice.model.Sort"%>
+<%@page import="com.aice.model.Blog"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <title>Blog</title>
 <style>
 body {
@@ -43,11 +48,19 @@ a {
 			id = (Integer) session.getAttribute("userId");
 		}
 		Sort sort;
-		ArrayList listSort = new ArrayList();
-		Iterator iterator = listSort.iterator();
-		if(session.getAttribute("userId") != null){
-			listSort = (ArrayList)session.getAttribute("listSort");
-			iterator = listSort.iterator();
+		ArrayList<Sort> listSort = new ArrayList<Sort>();
+		Iterator<Sort> iteratorSort = listSort.iterator();
+		
+		Blog blog;
+		ArrayList<Blog> listBlog = new ArrayList<Blog>();
+		Iterator<Blog> iteratorBlog = listBlog.iterator();
+		
+		if(session.getAttribute("userId") != null && session.getAttribute("listBlog") != null){
+			listSort = (ArrayList<Sort>)session.getAttribute("listSort");
+			iteratorSort = listSort.iterator();
+			
+			listBlog = (ArrayList<Blog>)session.getAttribute("listBlog");
+			iteratorBlog = listBlog.iterator();
 		}
 	%>
 	<div
@@ -58,8 +71,10 @@ a {
 		</div>
 		<div
 			style="margin: auto; margin-right: 0px; width: 30%; font-size: 20px;">
-			<a href="#">写日志</a> <a href="#">首页</a> <a href="#">消息(0)</a><img id="headImg" name="headImg" src="" style="display: none; width:32px; height:32px;"/> <a
-				href="#" id="userStatus">登陆</a> <a href="exit.jsp">退出</a>
+			<a href="addBlog.jsp">写日志</a> <a href="#">首页</a> <a href="#">消息(0)</a><img
+				id="headImg" name="headImg" src=""
+				style="display: none; width: 32px; height: 32px;" /> <a href="#"
+				id="userStatus">登陆</a> <a href="exit.jsp">退出</a>
 		</div>
 	</div>
 
@@ -71,7 +86,7 @@ a {
 
 	<div style="text-align: center; height: 100%;">
 		<div
-			style="magin: auto; background-image: url('res/image/img003.jpg'); background-repeat: repeat; height: 2000px">
+			style="magin: auto; background-image: url('res/image/img003.jpg'); background-repeat: repeat; height: 3000px">
 			<div style="magin: auto">
 				<ul>
 					<li><a href="#" class="nav">首页</a></li>
@@ -81,20 +96,35 @@ a {
 				</ul>
 			</div>
 			<div
-				style="margin: auto; border: 2px solid #ccffff; width: 80%; height: 80%;">
-				<div style="text-align: left; float: left; background-color: #ccffcc; ">
-					<label style="font-size: 20px; font-weight: bold;">分类</label> <a href="addSort.jsp" style="color:black">管理</a> <br />
-					<div id="sort">
+				style="margin: auto; border: 2px solid #ccffff; width: 80%; height: 90%;">
+				<div
+					style="text-align: left; float: left; background-color: #ccffcc; height: 100%; width: 15%">
+					<label style="font-size: 20px; font-weight: bold; color: #ff0000">分类</label>
+					<a href="addSort.jsp" style="color: black">管理</a> <br />
+					<div id="sort" style="width: 100%">
 						<%
-						while(iterator.hasNext()){ 
-							sort = 	(Sort)iterator.next();
-							out.println("<a href='#'>" + sort.getSortName() + "(" + sort.getCount() + ")" + " </a> <br />");
-						}
+							while(iteratorSort.hasNext()){ 
+																sort = 	(Sort)iteratorSort.next();
+																out.println("<a href='" + basePath + "blog/sortBlogAction?sortId=" + sort.getId() + "'>" + sort.getSortName() + "(" + sort.getCount() + ")" + " </a> <br />");
+															}
 						%>
 					</div>
 				</div>
-				<div style="text-align: left; background-color: red;">
-					<label style="font-size: 20px; font-weight: bold;">日志</label> <br />
+				<div style="text-align: left;">
+					<label style="font-size: 20px; font-weight: bold; color: #ff0000">日志</label>
+					<br />
+					<div id="blog">
+						<%
+							while(iteratorBlog.hasNext()){
+																blog = (Blog)iteratorBlog.next();
+																out.println("<label style='color:#ff9900; font-size:25px'> <a href='"+ basePath + "blog/showDetailBlogAction?blogId=" + blog.getId() + "'>" + blog.getTitle() + "</a> </label> <br />");	
+																out.println("<label style='color:#999999'; font-size:10px;>" + blog.getUpdateTime() + "</label> <br /><br /><br />");
+																out.println("<label>" + blog.getContent() + "</label> <br /> <br />");
+																out.println("<label style='font-size:10px'><a href='#'>阅读(0)</a>" + " | " + "<a href='#'>评论(0)</a>" + " | " + "<a id='updateBlog' href='" + basePath + "blog/showBlogAction?blogId=" + blog.getId() + "'>编辑</a>" + " | " + "<a href='"  + basePath + "blog/deleteBlogAction?blogId=" + blog.getId() + "'>删除</a>" + " | " + "<a href='"+ basePath + "blog/showDetailBlogAction?blogId=" + blog.getId() + "'>阅读全文</a></label>");
+																out.println("<hr /> <br />");
+															}
+						%>
+					</div>
 				</div>
 			</div>
 			Welcome
@@ -115,6 +145,7 @@ a {
 	function checkUser(){
 		var name = '<%=name%>';
 		var login = "登陆";
+		
 		if (name == "null") {
 			document.getElementById("userStatus").innerText = login;
 			document.getElementById("userStatus").href = "login.jsp";

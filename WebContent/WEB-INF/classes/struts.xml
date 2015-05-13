@@ -32,9 +32,13 @@
     <!-- Add packages here -->
     <package name="user" namespace="/" extends="struts-default">
         <action name="userAction" class="com.aice.action.UserAction" method="addUser">
-            <result name="accept">
-            	/index.jsp
+            <result>
+            	/login.jsp
             </result>
+            
+            <result name="no">
+        		/error.jsp
+        	</result>
         </action>
         
         <action name="loginAction" class="com.aice.action.LoginAction" method="checkUser">
@@ -78,6 +82,61 @@
         </action>
         
     	<action name="updateSortAction" class="com.aice.action.UpdateSortAction" method="updateSort">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+    </package>
+    
+    <package name="blog" namespace="/" extends="struts-default">
+    	<action name="addBlogAction" class="com.aice.action.BlogAction" method="addBlog">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+    	<action name="showBlogAction" class="com.aice.action.BlogAction" method="queryBlog">
+        	<result>
+        		/updateBlog.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+        
+    	<action name="showDetailBlogAction" class="com.aice.action.BlogAction" method="queryBlog">
+        	<result>
+        		/showBlog.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+    	
+    	<action name="updateBlogAction" class="com.aice.action.BlogAction" method="updateBlog">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+        
+    	<action name="deleteBlogAction" class="com.aice.action.BlogAction" method="deleteBlog">
+        	<result>
+        		/loginSuccess.jsp
+        	</result>
+        	<result name="no">
+        		/error.jsp
+        	</result>
+        </action>
+        
+    	<action name="sortBlogAction" class="com.aice.action.BlogAction" method="queryBlogBySortId">
         	<result>
         		/loginSuccess.jsp
         	</result>

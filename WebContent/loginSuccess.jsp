@@ -8,8 +8,9 @@
 </head>
 <body>
 	<%
-		
-		response.setHeader("refresh", "0;url=index.jsp");
+		String path = request.getContextPath();
+		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+		response.setHeader("refresh", "0;url=" + basePath + "index.jsp");
 	%>
 </body>
 </html>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.aice.db.DBConn;
+import com.aice.model.Blog;
 import com.aice.model.Sort;
 import com.aice.model.User;
 import com.opensymphony.xwork2.ActionSupport;
@@ -20,20 +21,15 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 	private int id = 0;
 	private User user;
 	public ArrayList<Sort> listSort;
-	public ArrayList<Sort> getListSort() {
-		return listSort;
-	}
+	private ArrayList<Blog> listBlog;
+	
 	@Override
 	public String execute(){
 		return "";
 	}
-	public void setListSort(ArrayList<Sort> listSort) {
-		this.listSort = listSort;
-	}
 
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		this.request = request;
 	}
 	
@@ -56,8 +52,15 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 	public void setMsgSession(User user){
 		System.out.println("print" + user.getId());
 		request.getSession().setAttribute("userId", user.getId());
+		
+		//set listSort attribute
 		int id = Integer.parseInt(request.getSession().getAttribute("userId").toString());
 		listSort = DBConn.querySortById(id);
+		request.getSession().setAttribute("listSort", listSort);
+		//set listBlog attribute
+		listBlog = DBConn.queryBlogById(id, "USERID");
+		request.getSession().setAttribute("listBlog", listBlog);
+		
 		request.getSession().setAttribute("userName", user.getName());
 		request.getSession().setAttribute("userNiname", user.getNiname());
 		request.getSession().setAttribute("psw", user.getPsw());
@@ -71,6 +74,6 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 		request.getSession().setAttribute("score", user.getScore());
 		request.getSession().setAttribute("createTime", user.getCreateTime());
 		request.getSession().setAttribute("updateTime", user.getUpdateTime());
-		request.getSession().setAttribute("listSort", listSort);
+		
 	}
 }

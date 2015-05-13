@@ -14,7 +14,6 @@ public class Sort {
 	private int count;
 	
 	public Sort(){
-		System.out.println("sort is been construct");
 	}
 	public int getCount() {
 		return count;

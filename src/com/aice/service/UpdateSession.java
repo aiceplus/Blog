@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.aice.db.DBConn;
+import com.aice.model.Blog;
 import com.aice.model.Sort;
 import com.aice.model.User;
 
@@ -17,6 +18,7 @@ public class UpdateSession implements ServletRequestAware{
 	private User user;
 	private Sort sort;
 	private ArrayList<Sort> listSort;
+	private ArrayList<Blog> listBlog;
 	public User setUser(){
 		user = new User();
 		this.user.setId(Integer.parseInt((String)request.getParameter("userId")));
@@ -34,6 +36,12 @@ public class UpdateSession implements ServletRequestAware{
 		this.user.setCreateTime((String)request.getParameter("createTime"));
 		this.user.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		return user;
+	}
+	
+	public void setBlogSession(){
+		listBlog = DBConn.queryBlogById((Integer.parseInt(request.getSession().getAttribute("userId").toString())), "USERID");
+		request.getSession().setAttribute("listBlog", listBlog);
+		setSortSession();
 	}
 	public void setUserSession(User user){
 		

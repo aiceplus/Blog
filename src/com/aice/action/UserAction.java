@@ -1,16 +1,12 @@
 package com.aice.action;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.interceptor.ApplicationAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.SessionAware;
 
 import com.aice.db.DBConn;
 import com.aice.model.Sort;
@@ -35,10 +31,6 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	private String updateTime;
 	private User user = new User();
 	private HttpServletRequest request;
-	private List<Sort> sortList;
-//	public UserAction(){
-//		System.out.println("construct");
-//	}
 
 	public String addUser(){
 		initUserMsg();
@@ -63,7 +55,10 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 		request.getSession().setAttribute("userId", id);
 		request.getSession().setAttribute("userName", user.getName());
 		request.getSession().setAttribute("userNiname", user.getNiname());
-		return "accept";
+		if(temp != 0){
+			return SUCCESS;
+		}else
+			return "no";
 	}
 	public String updateUser(){
 		initUserMsg();
