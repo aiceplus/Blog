@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.aice.db.DBConn;
+import com.aice.model.Album;
 import com.aice.model.Blog;
+import com.aice.model.Photo;
 import com.aice.model.Sort;
 import com.aice.model.User;
 
@@ -19,6 +21,8 @@ public class UpdateSession implements ServletRequestAware{
 	private Sort sort;
 	private ArrayList<Sort> listSort;
 	private ArrayList<Blog> listBlog;
+	private ArrayList<Album> listAlbum;
+	private ArrayList<Photo> listPhoto;
 	public User setUser(){
 		user = new User();
 		this.user.setId(Integer.parseInt((String)request.getParameter("userId")));
@@ -27,7 +31,9 @@ public class UpdateSession implements ServletRequestAware{
 		this.user.setPsw((String)request.getParameter("password"));
 		this.user.setAge(Integer.parseInt((String)request.getParameter("age")));
 		this.user.setSex(Integer.parseInt((String)request.getParameter("sex")));
+		
 		this.user.setHeadImgUrl((String) request.getAttribute("headImgUrl"));
+		
 		this.user.setBirthday((String) request.getParameter("birthday"));
 		this.user.setAddress((String) request.getParameter("address"));
 		this.user.setContact((String) request.getParameter("contact"));
@@ -44,7 +50,6 @@ public class UpdateSession implements ServletRequestAware{
 		setSortSession();
 	}
 	public void setUserSession(User user){
-		
 		request.getSession().setAttribute("userId", user.getId());
 		request.getSession().setAttribute("userName", user.getName());
 		request.getSession().setAttribute("userNiname", user.getNiname());
@@ -59,16 +64,31 @@ public class UpdateSession implements ServletRequestAware{
 		request.getSession().setAttribute("score", user.getScore());
 		request.getSession().setAttribute("createTime", user.getCreateTime());
 		request.getSession().setAttribute("updateTime", user.getUpdateTime());
-		
-		
+		request.getSession().setAttribute("userMsg",user);
 	}
 	public void setSortSession(){
 		listSort = DBConn.querySortById((Integer.parseInt(request.getSession().getAttribute("userId").toString())));
 		request.getSession().setAttribute("listSort", listSort);
 	}
+	
+	public void setAlbumSession(){
+		listAlbum = DBConn.queryAlbum("SELECT * FROM AICE_ALBUM WHERE USERID=" + Integer.parseInt(request.getSession().getAttribute("userId").toString()));
+		request.getSession().setAttribute("listAlbum", listAlbum);
+	}
+	
+	public void setPhotoSession(int albumId){
+		String sql = "";
+		if(albumId == 0)
+			listPhoto = DBConn.queryPhoto("SELECT * FROM AICE_PHOTO WHERE USERID=" + Integer.parseInt(request.getSession().getAttribute("userId").toString()));
+		else{
+			sql = "SELECT * FROM AICE_PHOTO WHERE USERID=" + Integer.parseInt(request.getSession().getAttribute("userId").toString()) + " AND ALBUMID=" + albumId;
+			listPhoto = DBConn.queryPhoto(sql);
+		}
+		setAlbumSession();
+		request.getSession().setAttribute("listPhoto", listPhoto);
+	}
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		this.request = request;
 	}
 }

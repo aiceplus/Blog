@@ -47,7 +47,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 		ArrayList<Blog> listBlog = new ArrayList<Blog>();
 		listBlog = DBConn.queryBlogById(blogId, "ID");
 		if(listBlog.size() != 0){
-			request.setAttribute("showBlog", listBlog);
+			request.getSession().setAttribute("showBlog", listBlog);
 			return SUCCESS;
 		}
 		return "no";

@@ -13,8 +13,6 @@ public class Sort {
 
 	private int count;
 	
-	public Sort(){
-	}
 	public int getCount() {
 		return count;
 	}

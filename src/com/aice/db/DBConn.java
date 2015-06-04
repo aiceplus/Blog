@@ -7,14 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.aice.model.Album;
 import com.aice.model.Blog;
+import com.aice.model.Photo;
 import com.aice.model.Sort;
 import com.aice.model.User;
 
 public class DBConn {
-	private static String USER = "aice";
-	private static String PSW = "000000";
-	private static String URL = "jdbc:mysql://localhost:3306/blog";
+//	private static String USER = "aice";
+	private static String USER = "adminxyTdLQv ";
+//	private static String PSW = "000000";
+	private static String PSW = "nhLdtkjKub3c";
+//	private static String URL = "jdbc:mysql://localhost:3306/blog";
+	private static String URL = "jdbc:mysql://adminxyTdLQv:nhLdtkjKub3c@127.13.36.130:3306/";
 	private static String DRIVER = "com.mysql.jdbc.Driver";
 	private static Connection conn = null;
 	private static PreparedStatement pstmt = null;
@@ -22,12 +27,14 @@ public class DBConn {
 	public static User user;
 	public static Sort sort;
 	public static int id;
+	public static Album album;
 
 	// get conn connection
 	public static Connection getConn() {
 		try {
 			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PSW);
+//			conn = DriverManager.getConnection(URL, USER, PSW);
+			conn = DriverManager.getConnection(URL);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,7 +44,22 @@ public class DBConn {
 		}
 		return conn;
 	}
-
+//check user isexist
+	public static int checkUser(String sql, String username){
+		int result = 0;
+		getConn();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				result = 1;
+			}else{
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	// insert new user
 	public static int insertUser(String sql) {
 		int result = 0;
@@ -67,8 +89,11 @@ public class DBConn {
 				userId = rs.getInt(1);
 			}
 			if (result != 0) {
-				String sortSql = "INSERT INTO AICE_SORT(USERID,SORTNAME,CREATETIME,UPDATETIME,COUNT) VALUES(" + userId +  "," + "'default','" + user.getCreateTime() + "','" + user.getUpdateTime() + "'," + "0" + ")";
+				String sortSql = "INSERT INTO AICE_SORT(USERID,SORTNAME,CREATETIME,UPDATETIME,COUNT) VALUES(" + userId +  "," + "'defaultSort','" + user.getCreateTime() + "','" + user.getUpdateTime() + "'," + "0" + ")";
 				pstmt = conn.prepareStatement(sortSql);
+				result = pstmt.executeUpdate();
+				String albumSql = "INSERT INTO AICE_ALBUM(USERID,ALBUMNAME,COUNT,CREATETIME,UPDATETIME) VALUES("+ userId + "," + "'defaultAlbum'" + ",0,'" + user.getCreateTime() + "','" + user.getUpdateTime()  +"')";
+				pstmt = conn.prepareStatement(albumSql);
 				result = pstmt.executeUpdate();
 			}
 			
@@ -117,7 +142,6 @@ public class DBConn {
 				id = rs.getInt(1);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 		return id;
@@ -157,7 +181,6 @@ public class DBConn {
 	// update user by id
 	public static int updateById(int id) {
 		String sql = "UPDATE AICE_USER SET NINAME=?,PSW=?,Age=?,SEX=?,HEADIMGURL=?,BIRTHDAY=?,ADDRESS=?,CONTACT=?,GRADE=?,SCORE=?,CREATETIME=?,UPDATETIME=? WHERE ID='" + id + "'";
-		System.out.println(sql);
 		int result = 0;
 		try {
 			getConn();
@@ -283,7 +306,37 @@ public class DBConn {
 		}
 		return result;
 	}
-
+	//update album count
+	public static void updateAlbumCount(int currentAlbumId, int updateAlbumId){
+		String sql = "SELECT COUNT(*) FROM AICE_PHOTO WHERE ALBUMID=" + currentAlbumId;
+		String updateSql = "SELECT COUNT(*) FROM AICE_PHOTO WHERE ALBUMID=" + updateAlbumId;
+		getConn();
+		int result = 0;
+		int updateResult = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				result = rs.getInt(1);
+			}
+			sql = "UPDATE AICE_ALBUM SET COUNT=" + result + " WHERE ID=" + currentAlbumId;
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+			if (updateAlbumId != 0) {
+				pstmt = conn.prepareStatement(updateSql);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					updateResult = rs.getInt(1);
+				}
+				updateSql = "UPDATE AICE_ALBUM SET COUNT=" + updateResult + " WHERE ID=" + updateAlbumId;
+				pstmt = conn.prepareStatement(updateSql);
+				updateResult = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	// update sort count
 	public static void updateSortCount(int currentSortId, int updateSortId) {
 		String sql = "SELECT COUNT(*) FROM AICE_BLOG WHERE SORTID=" + currentSortId;
@@ -311,7 +364,6 @@ public class DBConn {
 				updateResult = pstmt.executeUpdate();
 			}
 
-			System.out.println("count:" + result + "sortId" + currentSortId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -326,6 +378,96 @@ public class DBConn {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	//insert album
+	public static int addAlbum(String sql){
+		getConn();
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, album.getUserId());
+			pstmt.setString(2, album.getName());
+			pstmt.setInt(3, album.getCount());
+			pstmt.setString(4, album.getCreateTime());
+			pstmt.setString(5, album.getUpdateTime());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//query album
+	public static ArrayList<Album> queryAlbum(String sql){
+		getConn();
+		ArrayList<Album> listAlbum = new ArrayList<Album>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				Album ab = new Album();
+				ab.setId(rs.getInt(1));
+				ab.setUserId(rs.getInt(2));
+				ab.setName(rs.getString(3));
+				ab.setCount(rs.getInt(4));
+				ab.setCreateTime(rs.getString(5));
+				ab.setUpdateTime(rs.getString(6));
+				listAlbum.add(ab);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listAlbum;
+	}
+
+	public static int deleteOrUpdateAlbumById(String sql) {
+		// TODO Auto-generated method stub
+		getConn();
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//query all photo by userId
+	public static ArrayList<Photo> queryPhoto(String sql){
+		ArrayList<Photo> listPhoto = new ArrayList<Photo>();
+		getConn();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				Photo photo = new Photo();
+				photo.setId(rs.getInt(1));
+				photo.setUserId(rs.getInt(2));
+				photo.setName(rs.getString(3));
+				photo.setUrl(rs.getString(4));
+				photo.setCreateTime(rs.getString(5));
+				photo.setUpdateTime(rs.getString(6));
+				photo.setAlbumId(rs.getInt(7));
+				listPhoto.add(photo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listPhoto;
+	}
+	//insert photo
+	public static int addPhoto(int albumId,int userId,String url, String photoName, String createTime, String updateTime){
+		int result = 0;
+		String sql = "INSERT INTO AICE_PHOTO(USERID,PHOTONAME,URL,CREATETIME,UPDATETIME,ALBUMID) VALUE("+ userId + ",'" + photoName + "','" + url + "','" + createTime + "','" + updateTime + "'," + albumId + ")";
+		getConn();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;

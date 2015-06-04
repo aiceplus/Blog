@@ -26,10 +26,8 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class SaveFileAction extends ActionSupport implements
-		ServletRequestAware {
+public class SaveFileAction extends ActionSupport implements ServletRequestAware {
 	private HttpServletRequest request;
-	private String savePath = "D:\\Java\\Java Project\\blog4j\\Blog\\WebContent\\res\\upload";
 
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
@@ -37,6 +35,10 @@ public class SaveFileAction extends ActionSupport implements
 	}
 
 	public String save() {
+		int userId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
+		String savePath = "D:\\Java\\Java Project\\blog4j\\Blog\\WebContent\\res\\upload\\"+ userId + "\\";
+		File f = new File(savePath);
+		f.mkdir();
 		MultiPartRequestWrapper wrapper = (MultiPartRequestWrapper) request;
 		File file = wrapper.getFiles("imgFile")[0];
 		String fileName = wrapper.getFileNames("imgFile")[0];
@@ -47,8 +49,7 @@ public class SaveFileAction extends ActionSupport implements
 		// return "no";
 		// }
 		// 检查扩展名
-		String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1)
-				.toLowerCase();
+		String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
 		// if (!Arrays.<String> asList(extMap.get(dirName).split(",")).contains(
 		// fileExt)) {
 		// String temStr = "上传文件扩展名是不允许的扩展名。\n只允许" + extMap.get(dirName)
@@ -58,8 +59,7 @@ public class SaveFileAction extends ActionSupport implements
 		// }
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-		String newFileName = df.format(new Date()) + "_"
-				+ new Random().nextInt(1000) + "." + fileExt;
+		String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
 
 		try {
 			InputStream in = new FileInputStream(file);
@@ -105,8 +105,7 @@ public class SaveFileAction extends ActionSupport implements
 			upload.setSizeMax(maxFileSize);
 			try {
 				// 解析获取的文件
-				List fileItems = upload
-						.parseRequest((HttpServletRequest) request);
+				List fileItems = upload.parseRequest((HttpServletRequest) request);
 				// 处理上传的文件
 				Iterator i = fileItems.iterator();
 				while (i.hasNext()) {
@@ -119,13 +118,9 @@ public class SaveFileAction extends ActionSupport implements
 						long sizeInBytes = fi.getSize();
 						// 写入文件
 						if (fileName.lastIndexOf("\\") >= 0) {
-							file = new File(filePath,
-									fileName.substring(fileName
-											.lastIndexOf("\\")));
+							file = new File(filePath, fileName.substring(fileName.lastIndexOf("\\")));
 						} else {
-							file = new File(filePath,
-									fileName.substring(fileName
-											.lastIndexOf("\\") + 1));
+							file = new File(filePath, fileName.substring(fileName.lastIndexOf("\\") + 1));
 						}
 						fi.write(file);
 					}

@@ -4,145 +4,284 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-<!-- add to use upload start-->
 	
-<!-- <constant name="struts.multipart.maxSize" value="1152921504606846970006" /> -->
-<!-- <constant name="struts.i18n.encoding" value="UTF-8" /> -->
-<!-- <constant name="struts.multipart.saveDir" value="/tmp" /> -->
-<!-- <constant name="struts.objectFactory" value="spring" /> -->
-<!-- <constant name="struts.devMode" value="false" /> -->
-<!-- <bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest" name="myRequestParser" class="com.aice.service.RequestParseWrapper" scope="default" optional="true" /> -->
-<!-- <constant name="struts.multipart.handler" value="myRequestParser" /> -->
+	<!-- myInterceptor -->
+<!-- 	<interceptors> -->
+<!-- 		<interceptor name="authority" class="com.aice.service.AuthorityInterceptor" /> -->
+<!-- 		<interceptor-stack name="myStack"> -->
+<!-- 			<interceptor-ref name="defaultStack" /> -->
+<!-- 			<interceptor-ref name="authority" /> -->
+<!-- 		</interceptor-stack> -->
+<!-- 	</interceptors> -->
+<!-- 	<default-interceptor-ref name="myStack"></default-interceptor-ref> -->
+<!-- 	<global-results> -->
+<!-- 		<result name="login"> -->
+<!-- 			/login.jsp -->
+<!-- 		</result> -->
+<!-- 	</global-results> -->
+	<!-- myInterceptor -->
+	
+	<!-- add to use upload start -->
 
-<!-- add to use upload end -->
-<!--  
-    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <constant name="struts.devMode" value="false" />
-    <include file="example.xml"/>
-    <package name="default" namespace="/" extends="struts-default">
-        <default-action-ref name="index" />
-        <action name="index">
-            <result type="redirectAction">
-                <param name="actionName">HelloWorld</param>
-                <param name="namespace">/example</param>
-            </result>
-        </action>
-    </package>
--->
-    <!-- Add packages here -->
-    <package name="user" namespace="/" extends="struts-default">
-        <action name="userAction" class="com.aice.action.UserAction" method="addUser">
-            <result>
-            	/login.jsp
-            </result>
-            
-            <result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-        
-        <action name="loginAction" class="com.aice.action.LoginAction" method="checkUser">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-        
-        <action name="updateUserAction" class="com.aice.action.UpdateUserAction" method="updateUser">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-       
-        
-    	<action name="addSortAction" class="com.aice.action.SortAction" method="addSort">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-        
-        
-    </package>
-    <package name="sort" namespace="/" extends="struts-default">
-    	<action name="deleteSortAction" class="com.aice.action.UpdateSortAction" method="deleteSort">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-        
-    	<action name="updateSortAction" class="com.aice.action.UpdateSortAction" method="updateSort">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-    </package>
-    
-    <package name="blog" namespace="/" extends="struts-default">
-    	<action name="addBlogAction" class="com.aice.action.BlogAction" method="addBlog">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-    	<action name="showBlogAction" class="com.aice.action.BlogAction" method="queryBlog">
-        	<result>
-        		/updateBlog.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-        
-    	<action name="showDetailBlogAction" class="com.aice.action.BlogAction" method="queryBlog">
-        	<result>
-        		/showBlog.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-    	
-    	<action name="updateBlogAction" class="com.aice.action.BlogAction" method="updateBlog">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-        
-    	<action name="deleteBlogAction" class="com.aice.action.BlogAction" method="deleteBlog">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-        
-    	<action name="sortBlogAction" class="com.aice.action.BlogAction" method="queryBlogBySortId">
-        	<result>
-        		/loginSuccess.jsp
-        	</result>
-        	<result name="no">
-        		/error.jsp
-        	</result>
-        </action>
-    </package>
+	<!-- <constant name="struts.multipart.maxSize" value="1152921504606846970006" /> -->
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	<!-- <constant name="struts.multipart.saveDir" value="/tmp" /> -->
+	<!-- <constant name="struts.objectFactory" value="spring" /> -->
+<!-- 	<constant name="struts.devMode" value="true" /> -->
+	<!-- <bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest" name="myRequestParser" class="com.aice.service.RequestParseWrapper" scope="default" optional="true" /> -->
+	<!-- <constant name="struts.multipart.handler" value="myRequestParser" /> -->
+
+	<!-- add to use upload end -->
+	<!-- <constant name="struts.enable.DynamicMethodInvocation" value="false" /> <constant name="struts.devMode" value="false" /> <include file="example.xml"/> <package name="default" namespace="/" extends="struts-default"> 
+		<default-action-ref name="index" /> <action name="index"> <result type="redirectAction"> <param name="actionName">HelloWorld</param> <param name="namespace">/example</param> </result> </action> </package> -->
+	<!-- Add packages here -->
+	<package name="user" namespace="/" extends="struts-default">
+	
+	<interceptors>
+		<interceptor name="authority" class="com.aice.service.AuthorityInterceptor" />
+	</interceptors>
+<!-- 	<global-results> -->
+<!-- 		<result name="login"> -->
+<!-- 			/login.jsp -->
+<!-- 		</result> -->
+<!-- 	</global-results> -->
+	
+	
+		<action name="userAction" class="com.aice.action.UserAction" method="addUser">
+			<result>
+				/login.jsp
+			</result>
+
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+		<action name="showProfile" class="com.aice.action.UserAction" method="showProfile">
+			<result>
+				/forwardToProfile.jsp
+			</result>
+			<result name="login">
+				/login.jsp
+			</result>
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="authority" />
+		</action>
+		<action name="checkUser" class="com.aice.action.UserAction" method="checkUser">
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+			</result>
+			<result>
+				/canUse.jsp
+			</result>
+			<result name="no">
+				/noUse.jsp
+			</result>
+		</action>
+		<action name="loginAction" class="com.aice.action.LoginAction" method="checkUser">
+			<!-- <result> -->
+			<!-- /loginSuccess.jsp -->
+			<!-- </result> -->
+			<!-- <result name="no"> -->
+			<!-- /error.jsp -->
+			<!-- </result> -->
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+			</result>
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/noUse.jsp
+			</result>
+		</action>
+
+		<action name="updateUserAction" class="com.aice.action.UpdateUserAction" method="updateUser">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+
+		<action name="addSortAction" class="com.aice.action.SortAction" method="addSort">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+
+	</package>
+	
+	<package name="code" namespace="/" extends="struts-default">
+		<action name="checkCode" class="com.aice.service.ImgCode" method="checkCode">
+			<result type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+		
+		<action name="validateCode" class="com.aice.service.ImgCode" method="validateCode">
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+			</result>
+			<result>
+				/canUse.jsp
+			</result>
+			<result name="no">
+				/noUse.jsp
+			</result>
+		</action>
+	</package>
+	<package name="sort" namespace="/" extends="struts-default">
+		<action name="deleteSortAction" class="com.aice.action.UpdateSortAction" method="deleteSort">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+		<action name="updateSortAction" class="com.aice.action.UpdateSortAction" method="updateSort">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="blog" namespace="/" extends="struts-default">
+	<!-- myInterceptor -->
+	<interceptors>
+		<interceptor name="authority" class="com.aice.service.AuthorityInterceptor" />
+		<interceptor-stack name="myStack">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="authority" />
+		</interceptor-stack>
+	</interceptors>
+	<default-interceptor-ref name="myStack"></default-interceptor-ref>
+	<global-results>
+		<result name="login">
+			/login.jsp
+		</result>
+	</global-results>
+	<!-- myInterceptor -->
+	
+		<action name="addBlogAction" class="com.aice.action.BlogAction" method="addBlog">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+		<action name="showBlogAction" class="com.aice.action.BlogAction" method="queryBlog">
+			<result>
+				/forwordToUpBlog.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+		<action name="showDetailBlogAction" class="com.aice.action.BlogAction" method="queryBlog">
+			<result>
+				/forwardToShBlog.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+		<action name="updateBlogAction" class="com.aice.action.BlogAction" method="updateBlog">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+		<action name="deleteBlogAction" class="com.aice.action.BlogAction" method="deleteBlog">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+		<action name="sortBlogAction" class="com.aice.action.BlogAction" method="queryBlogBySortId">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="album" namespace="/" extends="struts-default">
+		<action name="addAlbumAction" class="com.aice.action.AlbumAction" method="addAlbum">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+		<action name="updateAlbumAction" class="com.aice.action.AlbumAction" method="updateAlbum">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+		<action name="deleteAlbumAction" class="com.aice.action.AlbumAction" method="deleteAlbum">
+			<result>
+				/loginSuccess.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+
+	</package>
+
+	<package name="photo" namespace="/" extends="struts-default">
+		<action name="queryPhoto" class="com.aice.action.PhotoAction" method="queryAll">
+			<result>
+				/refreshPhoto.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+		<action name="albumPhoto" class="com.aice.action.PhotoAction" method="albumPhoto">
+			<result>
+				/refreshPhoto.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+		<action name="addPhoto" class="com.aice.action.PhotoAction" method="addPhoto">
+			<result>
+				/refreshPhoto.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
+	</package>
 </struts>

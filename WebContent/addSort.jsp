@@ -42,7 +42,6 @@ a {
 					
 					out.println("<input type='text' style='border:none' value='" + sort.getSortName() + "' readonly='readonly' id='"+ "update" + sort.getId() + "' />" + "(" + "<a href='#fsf'>" + sort.getCount() + "</a>" + ")");
 
-					//out.println("<a href='" + basePath + "updateSortAction?sortId=" + sort.getId() + "'>" + "update" + "</a>");
 					out.println("<a href='#' onclick='updateSort(" + sort.getId() + ");' id='save" + sort.getId() + "'>" + "update" + "</a>");
 
 					out.println("<a href='" + basePath + "deleteSortAction?sortId=" + sort.getId() + "'>" + "delete" + "</a> <br /> <br /> <hr />");

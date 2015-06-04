@@ -1,12 +1,20 @@
 package com.aice.action;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringBufferInputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.aice.db.DBConn;
 import com.aice.model.Sort;
@@ -31,7 +39,30 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	private String updateTime;
 	private User user = new User();
 	private HttpServletRequest request;
-
+	
+	private InputStream inputStream = null;
+	
+	public InputStream getInputStream(){
+		return inputStream;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String checkUser(){
+		request = ServletActionContext.getRequest();
+		String usernameSub = (String)request.getParameter("usernameSub");
+		String sql = "SELECT ID FROM AICE_USER WHERE NAME='" + usernameSub + "'" ;
+		int result = DBConn.checkUser(sql, usernameSub);
+		if(result == 0){
+			inputStream = new StringBufferInputStream("true");
+			//out.print("true");
+			return SUCCESS;
+		}
+		else{
+			inputStream = new StringBufferInputStream("false");
+		//	out.print("false");
+			return "no";
+		}
+	}
 	public String addUser(){
 		initUserMsg();
 		user.setName(name);
@@ -65,7 +96,6 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 		return "update";
 	}
 	public void initUserMsg(){
-		
 		this.name = (String) request.getParameter("name");
 		this.niname = (String) request.getParameter("niname");
 		this.psw = (String)request.getParameter("password");
@@ -80,9 +110,13 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 		this.createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		this.updateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}
-
+	public String showProfile(){
+		
+		return SUCCESS;
+	}
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
+		
 	}
 }

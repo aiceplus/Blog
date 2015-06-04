@@ -1,14 +1,18 @@
 package com.aice.action;
 
 
+import java.io.InputStream;
+import java.io.StringBufferInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.aice.db.DBConn;
+import com.aice.model.Album;
 import com.aice.model.Blog;
 import com.aice.model.Sort;
 import com.aice.model.User;
@@ -22,7 +26,8 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 	private User user;
 	public ArrayList<Sort> listSort;
 	private ArrayList<Blog> listBlog;
-	
+	private ArrayList<Album> listAlbum;
+	private InputStream inputStream = null;
 	@Override
 	public String execute(){
 		return "";
@@ -34,15 +39,18 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 	}
 	
 	public String checkUser(){
+		
 		name = request.getParameter("name");
 		psw = request.getParameter("psw");
 		System.out.println(name + ":" + psw);
 		String sql = "SELECT ID FROM AICE_USER WHERE name='" + name + "' AND psw='" + psw + "'";
 		id = DBConn.checkUser(sql);
 		if(id == 0){
+			inputStream = new StringBufferInputStream("false");
 			return "no";
 		}
 		else{
+			System.out.println("id:" + id);
 			user = DBConn.queryById(id);
 			setMsgSession(user);
 			return SUCCESS;
@@ -50,9 +58,7 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 	}
 	
 	public void setMsgSession(User user){
-		System.out.println("print" + user.getId());
 		request.getSession().setAttribute("userId", user.getId());
-		
 		//set listSort attribute
 		int id = Integer.parseInt(request.getSession().getAttribute("userId").toString());
 		listSort = DBConn.querySortById(id);
@@ -60,6 +66,9 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 		//set listBlog attribute
 		listBlog = DBConn.queryBlogById(id, "USERID");
 		request.getSession().setAttribute("listBlog", listBlog);
+		//set listAlbum attribute
+		listAlbum = DBConn.queryAlbum("SELECT * FROM AICE_ALBUM WHERE USERID=" + user.getId());
+		request.getSession().setAttribute("listAlbum", listAlbum);
 		
 		request.getSession().setAttribute("userName", user.getName());
 		request.getSession().setAttribute("userNiname", user.getNiname());
@@ -74,6 +83,7 @@ public class LoginAction extends ActionSupport implements ServletRequestAware{
 		request.getSession().setAttribute("score", user.getScore());
 		request.getSession().setAttribute("createTime", user.getCreateTime());
 		request.getSession().setAttribute("updateTime", user.getUpdateTime());
+		request.getSession().setAttribute("userMsg", this.user);
 		
 	}
 }
