@@ -54,7 +54,18 @@ public class UpdateUserAction extends ActionSupport implements ServletRequestAwa
 			return SUCCESS;
 		}
 	}
-
+	public String saveHeadImg(){
+		int userId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
+		saveImg(userId);
+		String headImgUrl = request.getParameter("basePath") + "res/upload/" + userId + "/" + newFileName;
+		int result = DBConn.saveHeadImg("UPDATE AICE_USER SET HEADIMGURL=? WHERE ID=" + userId, headImgUrl);
+		request.setAttribute("headImgUrl", headImgUrl);
+		request.getSession().setAttribute("headImgUrl", headImgUrl);
+		if(result != 0)
+			return SUCCESS;
+		else
+			return "no";
+	}
 	public void saveImg(int userId) {
 		
 		String savePath = "D:\\Java\\Java Project\\blog4j\\Blog\\WebContent\\res\\upload\\" + userId + "\\";

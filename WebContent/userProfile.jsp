@@ -12,6 +12,8 @@
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%@page import="com.aice.model.User" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
 <title>user center</title>
 <style>
 body {

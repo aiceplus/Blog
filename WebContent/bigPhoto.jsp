@@ -10,6 +10,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>

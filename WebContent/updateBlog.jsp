@@ -15,6 +15,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
 <link rel="stylesheet" href="Scripts/editor/themes/default/default.css" />
 	<script charset="utf-8" src="Scripts/editor/kindeditor-min.js"></script>
 	<script charset="utf-8" src="Scripts/editor/zh_CN.js"></script>

@@ -103,7 +103,14 @@
 				/error.jsp
 			</result>
 		</action>
-
+		<action name="updateHeadImg" class="com.aice.action.UpdateUserAction" method="saveHeadImg">
+			<result>
+				/profile.jsp
+			</result>
+			<result name="no">
+				/error.jsp
+			</result>
+		</action>
 
 		<action name="addSortAction" class="com.aice.action.SortAction" method="addSort">
 			<result>

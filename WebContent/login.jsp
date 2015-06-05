@@ -5,6 +5,8 @@
 <head>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
 <title>login</title>
 <% 
 	String path = request.getContextPath();

@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="refesh">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
 <title>exit</title>
 </head>
 <body>

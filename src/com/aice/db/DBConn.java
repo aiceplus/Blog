@@ -14,12 +14,12 @@ import com.aice.model.Sort;
 import com.aice.model.User;
 
 public class DBConn {
-//	private static String USER = "aice";
-	private static String USER = "adminxyTdLQv ";
-//	private static String PSW = "000000";
-	private static String PSW = "nhLdtkjKub3c";
+	private static String USER = "aice";
+//	private static String USER = "adminxyTdLQv";
+	private static String PSW = "000000";
+//	private static String PSW = "nhLdtkjKub3c";
 //	private static String URL = "jdbc:mysql://localhost:3306/blog";
-	private static String URL = "jdbc:mysql://adminxyTdLQv:nhLdtkjKub3c@127.13.36.130:3306/";
+	private static String URL = "jdbc:mysql://127.13.36.130:3306/blog";
 	private static String DRIVER = "com.mysql.jdbc.Driver";
 	private static Connection conn = null;
 	private static PreparedStatement pstmt = null;
@@ -33,8 +33,7 @@ public class DBConn {
 	public static Connection getConn() {
 		try {
 			Class.forName(DRIVER);
-//			conn = DriverManager.getConnection(URL, USER, PSW);
-			conn = DriverManager.getConnection(URL);
+			conn = DriverManager.getConnection(URL, USER, PSW);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,7 +118,20 @@ public class DBConn {
 		}
 		return id;
 	}
-
+	//saveheadimg
+	public static int saveHeadImg(String sql,String imgUrl){
+		int result = 0;
+		getConn();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, imgUrl);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	// close conn
 	public static void close() {
 		if (conn != null) {
