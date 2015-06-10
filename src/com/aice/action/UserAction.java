@@ -97,14 +97,20 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	}
 	public void initUserMsg(){
 		this.name = (String) request.getParameter("name");
-		this.niname = (String) request.getParameter("niname");
+//		this.niname = (String) request.getParameter("niname");
+		this.niname = "”√ªß_" + this.name;
 		this.psw = (String)request.getParameter("password");
-		this.age = Integer.parseInt((String)request.getParameter("age"));
-		this.sex = Integer.parseInt((String)request.getParameter("sex"));
-		this.headImgUrl = "temp";
-		this.birthday = (String) request.getParameter("birthday");
-		this.address = (String) request.getParameter("address");
-		this.contact = (String) request.getParameter("contact");
+//		this.age = Integer.parseInt((String)request.getParameter("age"));
+		this.age = 0;
+//		this.sex = Integer.parseInt((String)request.getParameter("sex"));
+		this.sex = 0;
+		this.headImgUrl = "res/image/defaultHead.ico";
+//		this.birthday = (String) request.getParameter("birthday");
+		this.birthday = "0000-00-00";
+//		this.address = (String) request.getParameter("address");
+		this.address = "";
+//		this.contact = (String) request.getParameter("contact");
+		this.contact = "";
 		this.grade = 0;
 		this.score = 0;
 		this.createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());

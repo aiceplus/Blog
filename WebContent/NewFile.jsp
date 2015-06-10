@@ -13,7 +13,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
-<script charset="utf-8" src="Scripts/jquery/jquery-2.1.1.js" ></script>
+<link rel="stylesheet" href="css/style.css" />
+<script src="Scripts/jquery/jquery-2.1.1.min.js"></script>
+<script src="Scripts/layer/layer.js"></script>
 <title>user center</title>
 </head>
 <% 
@@ -21,21 +23,54 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 
-<button onclick="showDialog();">show dialog</button>
+<!-- <button onclick="showDialog();">show dialog</button> -->
 
-<body>
-	
+<body class="loginBody">
+	<label id="top"></label>
+	<input type="button" value="regist" onclick="regist();" />
+	<input type="button" value="login" onclick="login();" />
+	<table>
+		<tr>
+			<td class="leftTb">username:</td>
+			<td class="centerTb"><input type="text" class="txtIn" /></td>
+			<td class="rightTb"><label style="color: red">*</label></td>
+		</tr>
+		<tr>
+			<td class="leftTb">password:</td>
+			<td class="centerTb"><input type="text" class="txtIn" /></td>
+			<td class="rightTb"><label style="color: red">*</label></td>
+		</tr>
+		<tr>
+			<td class="leftTb">passwordConfirm:</td>
+			<td class="centerTb"><input type="text" class="txtIn" /></td>
+			<td class="rightTb"><label style="color: red">*</label></td>
+		</tr>
+		<tr>
+			<td class="leftTb"><img alt="loading" src="" /></td>
+			<td class="centerTb"><input type="text" class="txtIn" /></td>
+			<td class="rightTb"><label style="color: red">*</label></td>
+		</tr>
+		<tr>
+			<td class="leftTb"></td>
+			<td class="centerTb"><input type="button" value="regist" class="bt" /></td>
+			<td class="rightTb"><a href="#" onclick="login();">return to login in</a></td>
+		</tr>
+	</table>
+	<label id="label"></label>
 </body>
 <script type="text/javascript">
-	function showDialog(){
-		var d = dialog({
-			content:'a dialog is show'
+	layer.tips('只想提示地精准些', '#label');
+	function regist(){
+		var registIndex = layer.open({
+			title:'regist',
+			scrollbar: false,
+			type:2,
+			content:'NewFile.jsp',
+			area: ['500px', '400px'],
 		});
-		alert();
-		d.show();
-		setTimeout(function(){
-			d.close().remove();
-		}, 2000);
+	}
+	function login(){
+		window.location.href = "login.jsp";
 	}
 </script>
 

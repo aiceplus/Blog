@@ -12,6 +12,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
+<script src="Scripts/jquery/jquery-2.1.1.min.js"></script>
+<script src="Scripts/layer/layer.js"></script>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
@@ -111,7 +113,8 @@ a {
 				<div
 					style="text-align: left; float: left; background-color: #ccffcc; height: 100%; width: 15%">
 					<label style="font-size: 20px; font-weight: bold; color: #ff0000">分类</label>
-					<a href="addSort.jsp" style="color: black">管理</a> <br />
+<!-- 					<a href="addSort.jsp" style="color: black">管理</a> <br /> -->
+						<a href="#" onclick="addSort();" style="color: black">管理</a> <br />
 					<div id="sort" style="width: 100%">
 						<%
 							while(iteratorSort.hasNext()){ 
@@ -148,13 +151,32 @@ a {
 	</div>
 </body>
 <script type="text/javascript">
+	if(<%=request.getParameter("needLogin")%> == "yes" && <%=name%> != "null"){
+		layer.open({
+					title:'login in',
+					scrollbar: false,
+					type:2,
+					content:'login.jsp',
+					area: ['500px', '300px'],
+				});
+	}
 	function checkUser(){
 		var name = '<%=name%>';
 		var login = "登陆";
 		
 		if (name == "null") {
 			document.getElementById("userStatus").innerText = login;
-			document.getElementById("userStatus").href = "login.jsp";
+//  			document.getElementById("userStatus").href = "login.jsp";
+ 			document.getElementById("userStatus").href = "#";
+			document.getElementById("userStatus").onclick = function(){
+				layer.open({
+					title:'Blog',
+					scrollbar: false,
+					type:2,
+					content:'login.jsp',
+					area: ['500px', '400px'],
+				});
+			};
 			document.getElementById("addBlog").style.display="none";
 			document.getElementById("msgTib").style.display="none";
 			document.getElementById("exit").style.display="none";
@@ -168,5 +190,19 @@ a {
 			document.getElementById("exit").style.display="inline";
 		}
 	}
+	
+	function addSort(){
+		layer.open({
+			type:2,
+			content:'addSort.jsp',
+			area: ['500px', '300px']
+		});
+	}
+	
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	if(index != undefined){
+		parent.location.reload(); 
+	}
+	parent.layer.close(index); //再执行关闭
 </script>
 </html>

@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+.loginBody{
+	text-align:center;
+	margin:0px;
+}
+table{
+/* 	border: 1px solid #000000; */
+	width:100%;
+	height:100%;
+}
+tr{
+/* 	border: 1px solid #000000; */
+}
+td{
+ 	padding-bottom: 20px; 
+/* 	border: 1px solid #000000; */
+}
+.leftTb{
+	width:40%;
+	text-align:right;
+}
+.rightTb{
+	width:40%;
+	text-align:left;
+}
+.centerTb{
+	width:20%;
+}
+.txtIn{
+	background-color:#ffffcc; 
+	height:30px; 
+	width:200px;
+}
+.bt{
+	border:none; 
+	background-color:#6666ff; 
+	height:30px; 
+	width:200px;
+}

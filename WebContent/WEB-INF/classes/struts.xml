@@ -61,7 +61,7 @@
 				/forwardToProfile.jsp
 			</result>
 			<result name="login">
-				/login.jsp
+				/forwardToIndex.jsp
 			</result>
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="authority" />
@@ -176,7 +176,7 @@
 	<default-interceptor-ref name="myStack"></default-interceptor-ref>
 	<global-results>
 		<result name="login">
-			/login.jsp
+			/fowardToIndex.jsp
 		</result>
 	</global-results>
 	<!-- myInterceptor -->

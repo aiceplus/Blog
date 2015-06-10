@@ -30,11 +30,9 @@ a {
 	ArrayList listSort = (ArrayList) session.getAttribute("listSort");
 	Iterator iterator = listSort.iterator();
 %>
-<body style="text-align: center">
-	<h1>Sort Add</h1>
+<body>
 	<form action="addSortAction" method="post">
-		sortName:<input type="text" name="sortName" /> <br /> <input
-			type="submit" value="add" />
+		sortName:<input type="text" name="sortName" /><input type="submit" value="add" />
 	</form>
 	<div style="border: 1px solid #ccffcc; text-align: left;">
 		<form action="" method="post">
@@ -65,5 +63,6 @@ a {
 		}
 		sa.innerText = "save";
 	}
+	 
 </script>
 </html>

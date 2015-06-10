@@ -5,6 +5,9 @@
 <head>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="css/style.css" />
+<script src="Scripts/jquery/jquery-2.1.1.min.js"></script>
+<script src="Scripts/layer/layer.js"></script>
 <link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
 <title>login</title>
@@ -27,48 +30,73 @@ body{
 </head>
 <body style="text-align:center">
 <div style="text-align:center;">
-	<div style="margin:auto; width:80%; text-align:left">
-		<label style="font-size:40px">Blog</label>
-		<label style="color:#cc66cc">&nbsp;enjoy your life!</label>
-	</div>
-	<div style="margin:auto; width:80%; height:100%">
-		<div style="margin:auto; width:100%; background-color:#6666ff; height:100%">
-			<label style="font-size:24px">Welcome to login in Blog</label>
-		</div>
+<!-- 	<div style="margin:auto; width:80%; text-align:left"> -->
+<!-- 		<label style="font-size:40px">Blog</label> -->
+<!-- 		<label style="color:#cc66cc">&nbsp;enjoy your life!</label> -->
+<!-- 	</div> -->
+	<div>
+<!-- 		<div style="margin:auto; width:100%; background-color:#6666ff; height:100%"> -->
+<!-- 			<label style="font-size:24px">Welcome to login in Blog</label> -->
+<!-- 		</div> -->
 		
-		<div style="width:80%; margin-top:10%" >
+		<div>
 			<form action="loginAction" id="loginForm" method="post" onsubmit="return validate(this);">
-				<br />
 				
-				username:<br />
-				<label id="nametxt" class="warnTip"></label><br />
-				<input id="username" type="text" name="name" style="background-color:#ffffcc; height:30px; width:200px" /><br />
+				<table>
+					<tr>
+						<td class="leftTb">username:</td>
+						<td class="centerTb"><input type="text" id="username" name="name" class="txtIn" /></td>
+						<td class="rightTb"><label id="nametxt" class="warnTip" style="color: red">*</label></td>
+					</tr>
+					<tr>
+						<td class="leftTb">password:</td>
+						<td class="centerTb"><input type="password" class="txtIn" id="password" name="psw" /></td>
+						<td class="rightTb"><label id="pswtxt" class="warnTip" style="color: red">*</label></td>
+					</tr>
+					<tr>
+						<td class="leftTb"><img id="imgCode" name="imgCode" src="<%=basePath %>code/checkCode" alt="validateCode" /><img src="res/image/refrush.jpg" onclick="reloadCode();" style="width:32px; height:32px" /></td>
+						<td class="centerTb"><input id="code" name="code" type="text" class="txtIn" /></td>
+						<td class="rightTb"><label id="codetxt" class="warnTip" style="color: red">*</label></td>
+					</tr>
+					<tr>
+						<td class="leftTb"></td>
+						<td class="centerTb"><input type="button" onclick="checkSubmitCode();" value="Login in" class="bt" /></td>
+						<td class="rightTb"><a onclick="regist();" href="#">regist</a></td>
+					</tr>
+				</table>
 				
-				password:<br />
-				<label id="pswtxt" class="warnTip"></label><br />
-				<input id="password" type="password" name="psw" style="background-color:#ffffcc; height:30px; width:200px" /><br />
-				<br />
-				Code:<img id="imgCode" name="imgCode" src="<%=basePath %>code/checkCode" alt="validateCode" />&nbsp;<a href="#" onclick="reloadCode();">refrush</a><br />
-				<label id="codetxt" class="warnTip"></label><br />
-				<input id="code" type="text" name="code" style="background-color:#ffffcc; height:30px; width:200px" /><br />
-				<div style="width:200px;margin:auto;text-align:right">
-					<a href="addUser.jsp">regist</a>
-				</div>
-				<br />
-				<input type="button" onclick="checkSubmitCode();" value="Login in" style="border:none; background-color:#6666ff; height:30px; width:200px" />
+<!-- 				username: -->
+<!-- 				<label id="nametxt" class="warnTip"></label><br /> -->
+<!-- 				<input id="username" type="text" name="name" style="background-color:#ffffcc; height:30px; width:200px" /><br /> -->
+				
+<!-- 				password: -->
+<!-- 				<label id="pswtxt" class="warnTip"></label><br /> -->
+<!-- 				<input id="password" type="password" name="psw" style="background-color:#ffffcc; height:30px; width:200px" /><br /> -->
+<!-- 				<br /> -->
+<%-- 				Code:<img id="imgCode" name="imgCode" src="<%=basePath %>code/checkCode" alt="validateCode" />&nbsp;<a href="#" onclick="reloadCode();">refrush</a><br /> --%>
+<!-- 				<label id="codetxt" class="warnTip"></label><br /> -->
+<!-- 				<input id="code" type="text" name="code" style="background-color:#ffffcc; height:30px; width:200px" /><br /> -->
+<!-- 				<div style="width:200px;margin:auto;text-align:right"> -->
+<!-- 					<a href="addUser.jsp">regist</a> -->
+<!-- 				</div> -->
+<!-- 				<br /> -->
+<!-- 				<input type="button" onclick="checkSubmitCode();" value="Login in" style="border:none; background-color:#6666ff; height:30px; width:200px" /> -->
 			</form>
 		</div>
 	</div>
-	<div id="foot" style="text-align: center; margin-top:200px">
-		<div style="magin: auto">
-			<label>aice版权所有&copy;2015</label>
-		</div>
-	</div>
+<!-- 	<div id="foot" style="text-align: center; margin-top:200px"> -->
+<!-- 		<div style="magin: auto"> -->
+<!-- 			<label>aice版权所有&copy;2015</label> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 </div>
-<s:debug></s:debug>
 </body>
 <script>
 	document.getElementById("username").focus();
+	
+	function regist(){
+		window.location.href = "addUser.jsp";
+	}
 	
 	function keyevent(){ 
 		if(event.keyCode == 13) 
@@ -164,5 +192,6 @@ body{
 		var time = new Date().getTime();
 		document.getElementById("imgCode").src="<%=basePath %>code/checkCode?time=" + time;
 	}
+	
 </script>
 </html>
