@@ -55,7 +55,7 @@ body{
 					</tr>
 					<tr>
 						<td class="leftTb"><img id="imgCode" name="imgCode" src="<%=basePath %>code/checkCode" alt="validateCode" /><img src="res/image/refrush.jpg" onclick="reloadCode();" style="width:32px; height:32px" /></td>
-						<td class="centerTb"><input id="code" name="code" type="text" class="txtIn" /></td>
+						<td class="centerTb"><input onblur="onlyCheckSubmitCode();" id="code" name="code" type="text" class="txtIn" /></td>
 						<td class="rightTb"><label id="codetxt" class="warnTip" style="color: red">*</label></td>
 					</tr>
 					<tr>
@@ -139,6 +139,32 @@ body{
 			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 	}
+	function onlyCheckSubmitCode(){
+		var submitCode = document.getElementById("code").value;
+		var urlCode = '<%=basePath%>' + "code/validateCode?code=" + submitCode;
+		createXMLHttp();
+		xmlHttp.open("POST",urlCode, true);
+		xmlHttp.onreadystatechange = onlyCheckSubmitCodeCallback;
+		xmlHttp.send(null);
+		document.getElementById("codetxt").innerText = "validating...";
+	}
+	
+	function onlyCheckSubmitCodeCallback(){
+		if(xmlHttp.readyState == 4){
+			if(xmlHttp.status == 200){
+				var text = xmlHttp.responseText;
+				if(text == "false"){
+					document.getElementById("codetxt").innerText = "code wrong";
+					document.getElementById("codetxt").style.color="red";
+				}
+				else{
+					document.getElementById("codetxt").innerText = "code right"
+					document.getElementById("codetxt").style.color="green";
+				}
+			}
+		}
+	}
+	
 	function checkUser(){
 		var name = document.getElementById("username").value;
 		var psw = document.getElementById("password").value;

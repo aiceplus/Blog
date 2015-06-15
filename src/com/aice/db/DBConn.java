@@ -14,10 +14,10 @@ import com.aice.model.Sort;
 import com.aice.model.User;
 
 public class DBConn {
-	private static String USER = "aice";
-//	private static String USER = "adminxyTdLQv";
-	private static String PSW = "000000";
-//	private static String PSW = "nhLdtkjKub3c";
+//	private static String USER = "aice";
+	private static String USER = "adminxyTdLQv";
+//	private static String PSW = "000000";
+	private static String PSW = "nhLdtkjKub3c";
 //	private static String URL = "jdbc:mysql://localhost:3306/blog";
 	private static String URL = "jdbc:mysql://127.13.36.130:3306/blog";
 	private static String DRIVER = "com.mysql.jdbc.Driver";
@@ -406,6 +406,7 @@ public class DBConn {
 			pstmt.setInt(3, album.getCount());
 			pstmt.setString(4, album.getCreateTime());
 			pstmt.setString(5, album.getUpdateTime());
+			pstmt.setString(6, album.getAlbumPhoto());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -427,6 +428,7 @@ public class DBConn {
 				ab.setCount(rs.getInt(4));
 				ab.setCreateTime(rs.getString(5));
 				ab.setUpdateTime(rs.getString(6));
+				ab.setAlbumPhoto(rs.getString(7));
 				listAlbum.add(ab);
 			}
 		} catch (SQLException e) {

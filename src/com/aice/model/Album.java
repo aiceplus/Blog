@@ -7,6 +7,13 @@ public class Album {
 	private int count;
 	private String createTime;
 	private String updateTime;
+	private String albumPhoto;
+	public String getAlbumPhoto() {
+		return albumPhoto;
+	}
+	public void setAlbumPhoto(String albumPhoto) {
+		this.albumPhoto = albumPhoto;
+	}
 	public int getCount() {
 		return count;
 	}

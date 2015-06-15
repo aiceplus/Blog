@@ -124,12 +124,12 @@ a {
 								album = (Album)iterator.next();
 								if(index % 4 == 0){
 									out.println("<tr><td style='width:25%'>");
-									out.println("<a href='" + basePath + "album/albumPhoto?albumId=" + album.getId() + "'><img src='#' style='width:64px; height:64px' /></a> <br/>");
+									out.println("<a href='" + basePath + "album/albumPhoto?albumId=" + album.getId() + "'><img src='"+ album.getAlbumPhoto() +"' style='width:64px; height:64px' /></a> <br/>");
 									out.println("<a href='" + basePath + "album/albumPhoto?albumId=" + album.getId() + "'>" + album.getName() + "(" + album.getCount() + ")" + " </a> <br />");
 									out.println("</td>");
 								}else{
 									out.println("<td style='width:25%'>");
-									out.println("<a href='" + basePath + "album/albumPhoto?albumId=" + album.getId() + "'><img src='#' style='width:64px; height:64px' /></a> <br/>");
+									out.println("<a href='" + basePath + "album/albumPhoto?albumId=" + album.getId() + "'><img src='"+ album.getAlbumPhoto() +"' style='width:64px; height:64px' /></a> <br/>");
 									out.println("<a href='" + basePath + "album/albumPhoto?albumId=" + album.getId() + "'>" + album.getName() + "(" + album.getCount() + ")" + " </a> <br />");
 									out.println("</td>");
 								}

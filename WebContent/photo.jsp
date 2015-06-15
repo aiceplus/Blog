@@ -4,14 +4,16 @@
 	***************
 	copyright 2015
 -->
-<%@ page language="java" contentType="text/html; charset=GBK"
-	pageEncoding="GBK"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="icon" href="res/image/logo.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="res/image/logo.ico" type="image/x-icon" />	
+<script src="Scripts/jquery/jquery-2.1.1.min.js"></script>
+<script src="Scripts/layer/layer.js"></script>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
@@ -81,10 +83,10 @@ a {
 		</div>
 		<div
 			style="margin: auto; margin-right: 0px; width: 30%; font-size: 20px;">
-			<a href="addBlog.jsp">Ğ´ÈÕÖ¾</a> <a href="index.jsp">Ê×Ò³</a> <a href="#">ÏûÏ¢(0)</a><img
+			<a href="addBlog.jsp">å†™æ—¥å¿—</a> <a href="index.jsp">é¦–é¡µ</a> <a href="#">æ¶ˆæ¯(0)</a><img
 				id="headImg" name="headImg" src=""
 				style="display: none; width: 32px; height: 32px;" /> <a href="#"
-				id="userStatus">µÇÂ½</a> <a href="exit.jsp">ÍË³ö</a>
+				id="userStatus">ç™»é™†</a> <a href="exit.jsp">é€€å‡º</a>
 		</div>
 	</div>
 
@@ -98,18 +100,18 @@ a {
 			style="magin: auto; background-image: url('res/image/img003.jpg'); background-repeat: repeat; height: 3000px">
 			<div style="magin: auto">
 				<ul>
-					<li><a href="index.jsp" class="nav">Ê×Ò³</a></li>
-					<li><a href="index.jsp" class="nav">ÈÕÖ¾</a></li>
-					<li><a href="album.jsp" class="nav">Ïà²á</a></li>
-					<li><a href="profile.jsp" class="nav">¹ØÓÚÎÒ</a></li>
+					<li><a href="index.jsp" class="nav">é¦–é¡µ</a></li>
+					<li><a href="index.jsp" class="nav">æ—¥å¿—</a></li>
+					<li><a href="album.jsp" class="nav">ç›¸å†Œ</a></li>
+					<li><a href="profile.jsp" class="nav">å…³äºæˆ‘</a></li>
 				</ul>
 			</div>
 			<div
 				style="margin: auto; border: 2px solid #ccffff; width: 80%; height: 90%;">
 				<div
 					style="text-align: left; float: left; background-color: #ccffcc; height: 100%; width: 15%">
-					<label style="font-size: 20px; font-weight: bold; color: #ff0000">Ïà²á</label>
-					<a href="addAlbum.jsp" style="color: black">¹ÜÀí</a> <br />
+					<label style="font-size: 20px; font-weight: bold; color: #ff0000">ç›¸å†Œ</label>
+					<a href="addAlbum.jsp" style="color: black">ç®¡ç†</a> <br />
 					<div id="album" style="width: 100%">
 						<%
 							while(iteratorAlbum.hasNext()){
@@ -120,9 +122,9 @@ a {
 					</div>
 				</div>
 				<div style="text-align: left;">
-					<label style="font-size: 20px; font-weight: bold; color: #ff0000">ÕÕÆ¬</label>
+					<label style="font-size: 20px; font-weight: bold; color: #ff0000">ç…§ç‰‡</label>
 					<br />
-					<div id="album">
+					<div id="div_photo">
 						<table style="border:1px; width:80%">
 						<%
 							int index = 0;
@@ -130,11 +132,13 @@ a {
 								photo = (Photo)iteratorPhoto.next();
 								if(index % 4 == 0){
 									out.println("<tr><td style='width:25%'>");
-									out.println("<a href='bigPhoto.jsp?photoId=" + photo.getId() + "&currentPhoto=" + photo.getUrl() + "&currentIndex=" + index + "'><img alt='click to view big'" +  " src='"+ photo.getUrl() +"' style='width:128px; height:128px' /></a>");
+// 									out.println("<a href='bigPhoto.jsp?photoId=" + photo.getId() + "&currentPhoto=" + photo.getUrl() + "&currentIndex=" + index + "'><img alt='click to view big'" +  " src='"+ photo.getUrl() +"' style='width:128px; height:128px' /></a>");
+									out.println("<img alt='view photo' " + "layer-src='" + photo.getUrl() +  "' src='"+ photo.getUrl() +"' style='width:168px; height:128px' />");
 									out.println("</td>");
 								}else{
 									out.println("<td style='width:25%'>");
-									out.println("<a href='bigPhoto.jsp?photoId=" + photo.getId() + "&currentPhoto=" + photo.getUrl() + "&currentIndex=" + index + "'><img alt='click to view big'" +  " src='"+ photo.getUrl() +"' style='width:128px; height:128px' /></a>");
+// 									out.println("<a href='bigPhoto.jsp?photoId=" + photo.getId() + "&currentPhoto=" + photo.getUrl() + "&currentIndex=" + index + "'><img alt='click to view big'" +  " src='"+ photo.getUrl() +"' style='width:128px; height:128px' /></a>");
+									out.println("<img alt='view photo' " + "layer-src='" + photo.getUrl() + "' src='"+ photo.getUrl() +"' style='width:168px; height:128px' /></a>");
 									out.println("</td>");
 								}
 								photoUrl.add(photo.getUrl());
@@ -154,24 +158,33 @@ a {
 	</div>
 	<div id="foot" style="text-align: center">
 		<div style="magin: auto">
-			<label>aice°æÈ¨ËùÓĞ&copy;2015</label>
+			<label>aiceç‰ˆæƒæ‰€æœ‰&copy;2015</label>
 		</div>
 	</div>
 </body>
 <script type="text/javascript">
-	function checkUser(){
-		var name = '<%=name%>';
-		var login = "µÇÂ½";
-		
-		if (name == "null") {
-			document.getElementById("userStatus").innerText = login;
-			document.getElementById("userStatus").href = "login.jsp";
-		} else {
-			document.getElementById("userStatus").innerText = name;
-			document.getElementById("userStatus").href = "profile.jsp";
-			document.getElementById("headImg").src = "<%=session.getAttribute("headImgUrl")%>";
-			document.getElementById("headImg").style.display = "inline";
-		}
+;!function(){
+	layer.config({
+	    extend: 'extend/layer.ext.js'
+	});
+	layer.ready(function(){ //ä¸ºäº†layer.ext.jsåŠ è½½å®Œæ¯•å†æ‰§è¡Œ
+	    layer.photos({
+	        photos: '#div_photo'
+	    });
+	});
+}();
+function checkUser(){
+	var name = '<%=name%>';
+	var login = "ç™»é™†";
+	if (name == "null") {
+		document.getElementById("userStatus").innerText = login;
+		document.getElementById("userStatus").href = "login.jsp";
+	} else {
+		document.getElementById("userStatus").innerText = name;
+		document.getElementById("userStatus").href = "profile.jsp";
+		document.getElementById("headImg").src = "<%=session.getAttribute("headImgUrl")%>";
+		document.getElementById("headImg").style.display = "inline";
 	}
+}
 </script>
 </html>

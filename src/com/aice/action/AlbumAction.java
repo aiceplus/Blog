@@ -32,8 +32,9 @@ public class AlbumAction extends ActionSupport implements ServletRequestAware {
 		album.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		album.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		album.setCount(0);
+		album.setAlbumPhoto("res/image/defaultHead.ico");
 		DBConn.album = this.album;
-		String sql = "INSERT INTO AICE_ALBUM(USERID,ALBUMNAME,COUNT,CREATETIME,UPDATETIME) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO AICE_ALBUM(USERID,ALBUMNAME,COUNT,CREATETIME,UPDATETIME, ALBUMPHOTO) VALUES(?,?,?,?,?,?)";
 		result = DBConn.addAlbum(sql);
 		if (result != 0){
 			setMession();

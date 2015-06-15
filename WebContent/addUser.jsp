@@ -45,7 +45,7 @@ body{
 					</tr>
 					<tr>
 						<td class="leftTb">password:</td>
-						<td class="centerTb"><input id="password" name="psw" type="password" class="txtIn"  /></td>
+						<td class="centerTb"><input id="password" name="password" type="password" class="txtIn"  /></td>
 						<td class="rightTb"><label id="pswtxt" style="color: red">*</label></td>
 					</tr>
 					<tr>

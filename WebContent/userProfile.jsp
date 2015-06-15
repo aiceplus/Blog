@@ -98,7 +98,8 @@ a {
 						<div style="margin:auto">
 						<br />
 							<img src='<%=user.getHeadImgUrl()%>' style="width:128px; height:128px"/><br />
-							<a href="#">上传头像</a> <br />
+							<input type="file" name="imgFile" id="imgFile" style="display:none"/>
+							<a href="#" onclick="uploadImg();" id="upload">上传头像</a> <br />
 							<label style="color:#996600; font-size:10px">注册时间：<br /><%=user.getCreateTime() %></label> <br />
 							<label style="color:#996600; font-size:10px">最近更新：<br /><%=user.getUpdateTime() %></label> <br />
 						</div>
@@ -174,6 +175,22 @@ a {
 			document.getElementById("userStatus").href = "profile.jsp";
 			document.getElementById("headImg").src = "<%=session.getAttribute("headImgUrl")%>";
 			document.getElementById("headImg").style.display = "inline";
+		}
+	}
+	
+	function uploadImg(){
+		document.getElementById("imgFile").style.display="inline";
+		flag = true;
+		document.getElementById("upload").innerText="save";
+		document.getElementById("upload").onclick=saveImg;
+	}
+	function saveImg(){
+		if(document.getElementById("imgFile").value!=""){
+			document.getElementById("imgForm").submit();
+		}
+		else{
+			alert("please select img to save your headImg");
+			document.getElementById("imgFile").focus();
 		}
 	}
 </script>
